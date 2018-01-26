@@ -1,0 +1,22 @@
+{
+  "name": "command_line_files",
+  "version": "1.2.1",
+  "description": "Utility to build an array of files from command line arguments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "viksicom",
+  "bundleDependencies": false,
+  "dependencies": {
+    "glob": "^7.1.2"
+  },
+  "keywords": [
+    "file",
+	"directory",
+    "parameter",
+    "argument",
+    "command"
+  ],
+  "license": "ISC"
+}
