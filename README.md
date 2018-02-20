@@ -32,9 +32,11 @@ clf.processEachFile( (filename) => {
 });
 ```
 
-Integrated `command_line_files` with `primitive_logger` to allow for better logging control. Internally, `command_line_files` module uses `"file_filter"` message type, so in order to enable its logs, `"file_filter"` should be added to the list of active types.
+To improve logging control and to allow for better integration with other modules, introduced integration with `primitive_logger` See https://www.npmjs.com/package/primitive_logger. 
 
-Examples of using module with logging.
+This module uses `"command_line_files"` message type, so to enable its logs, `"command_line_files"` should be added to the list of active types.
+
+Examples of using module with logging:
 
 ```javascript
 const lr = require('primitive_logger')
