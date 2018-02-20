@@ -27,8 +27,45 @@ clf.getFilesSync( (files) => {
 });
 
 // Example 3: processEachFile uses provided filesList, verifies files, and invokes the callback function for each file
-clf.processEachFile( {verbose: true, filesList: ["*"]}, (filename) => {
+clf.processEachFile( (filename) => {
 	console.log("processFiles: "+filename);
+});
+```
+
+Integrated `command_line_files` with `primitive_logger` to allow for better logging control. Internally, `command_line_files` module uses `"file_filter"` message type, so in order to enable its logs, `"file_filter"` should be added to the list of active types.
+
+Examples of using module with logging.
+
+```javascript
+const lr = require('primitive_logger')
+var clf = require('./clf.js');
+
+// Example 1 : Enable "command_line_files" option in logger 
+//             to make it print some diagnostics
+clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
+	console.log("getFilesSync array 2: "+JSON.stringify(files));
+	files.forEach( (file) => {
+		console.log("getFilesSync for each: "+file);
+	});
+});
+
+// Example 2 : Create logger and pass it over to command_line_files module 
+//             with "command_line_files" option enabled.
+var options = {
+	logger: {
+		format: { 
+			date: {show: true},
+			type: {show: true}
+		},
+		outputs: [{	file: "stdout",	types: ["command_line_files","info"]}]
+	},
+	filesList: ["*"]
+}
+logger = new lr.Logger(options);
+options.logger.instance = logger;
+
+clf.processEachFile( options, (filename) => {
+    logger.log("info", "Processing file: "+filename);
 });
 ```
 
@@ -55,7 +92,8 @@ See Glob Primer https://www.npmjs.com/package/glob for command line pattern matc
 ## Options
 
 * `options` The options object can be passed in to all functions
-   * `verbose` - if true, will print to console the reasons to reject matches. Default: false
+   * `logger` - `primitive_logger` option definitions. See https://www.npmjs.com/package/primitive_logger for details. 
+		* `"command_line_files"` message type is used by this module. If logger.instance is not set, the new instance will be created using `logger` options. 
    * `validate` - when true, will make sure object exists on the local file system. Default: true
    * `slice` - can be used to identify how many command line parameters to skip. Default: 2 ("node" and your_script_name.js)
    * `files` - when true, will include valid filenames, assuming `validate` is true. Default: true

@@ -1,5 +1,6 @@
 const fs=require('fs');
 const glob=require('glob');
+const prlr = require('primitive_logger')
 
 function getFilesSync (options, callback) {
 	if (typeof options === 'function') {
@@ -84,9 +85,7 @@ module.exports = {
 };
 
 function con_out(opts, data) {
-	if (opts.verbose) {
-		console.log(data);
-	}
+	opts.logger.instance.log("command_line_files", data);
 }
 
 function setopts (options) {
@@ -117,6 +116,15 @@ function setopts (options) {
 	} 
 	if (options.filesList && options.filesList.length > 0) {
 		opts.filesList = options.filesList;
+	}
+	
+	if(!options.logger) {
+		opts.logger = {};
+	} else {
+		opts.logger = options.logger;
+	}
+	if (!opts.logger.instance) {
+		opts.logger.instance = new prlr.Logger(opts);
 	}
 	return opts;
 }
