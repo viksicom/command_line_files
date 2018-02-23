@@ -12,17 +12,16 @@ npm install --save command_line_files
 ```
 
 ```javascript
-const clf = require('command_line_files');
-
 // Example 1: getFilesSync returns an array of filenames and directories
+const clf = require('command_line_files');
 files = clf.getFilesSync();
 console.log("getFilesSync array: "+JSON.stringify(files));
 ```
 
 ```javascript
+// Example 2: getFilesSync passes an array to callback function
 const clf = require('command_line_files');
 
-// Example 2: getFilesSync passes an array to callback function
 clf.getFilesSync( (files) => {
 	console.log("getFilesSync array 2: "+JSON.stringify(files));
 	files.forEach( (file) => {
@@ -32,9 +31,9 @@ clf.getFilesSync( (files) => {
 ```
 
 ```javascript
+// Example 3: processEachFile uses provided filesList, and invokes the callback function for each file
 const clf = require('command_line_files');
 
-// Example 3: processEachFile uses provided filesList, and invokes the callback function for each file
 clf.processEachFile( (filename) => {
 	console.log("processFiles: "+filename);
 });
@@ -47,11 +46,10 @@ This module uses `"command_line_files"` message type, so to enable its logs, `"c
 Examples of using module with logging:
 
 ```javascript
-const lr = require('primitive_logger')
-var clf = require('./clf.js');
-
 // Example 4 : Enable "command_line_files" option in logger 
 //             to make it print some diagnostics
+const clf = require('command_line_files');
+
 clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
 	console.log("getFilesSync array 2: "+JSON.stringify(files));
 	files.forEach( (file) => {
@@ -62,9 +60,11 @@ clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
 ```
 
 ```javascript
-const clf = require('command_line_files');
 // Example 5 : Create logger and pass it over to command_line_files module 
 //             with "command_line_files" option enabled.
+const lr = require('primitive_logger')
+const clf = require('command_line_files');
+
 var options = {
 	logger: {
 		types: ["command_line_files","info"],
