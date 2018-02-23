@@ -47,7 +47,8 @@ Examples of using module with logging:
 
 ```javascript
 // Example 4 : Enable "command_line_files" option in logger 
-//             to make it print some diagnostics
+//             to make it print some diagnostics, while calling code
+//             doesn't use logger
 const clf = require('command_line_files');
 
 clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
@@ -60,8 +61,8 @@ clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
 ```
 
 ```javascript
-// Example 5 : Create logger and pass it over to command_line_files module 
-//             with "command_line_files" option enabled.
+// Example 5 : Calling code creates and uses logger and passes it over to CLF module. 
+//             The "command_line_files" type is added specifically for CLF module use.
 const lr = require('primitive_logger')
 const clf = require('command_line_files');
 
