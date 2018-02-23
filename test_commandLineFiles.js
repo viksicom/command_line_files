@@ -14,11 +14,11 @@ clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
 //             with "command_line_files" option enabled.
 var options = {
 	logger: {
+		types: ["command_line_files","info"],
 		format: { 
 			date: {show: true},
 			type: {show: true}
-		},
-		outputs: [{	file: "stdout",	types: ["command_line_files","info"]}]
+		}
 	},
 	filesList: ["*"]
 }

@@ -17,6 +17,10 @@ const clf = require('command_line_files');
 // Example 1: getFilesSync returns an array of filenames and directories
 files = clf.getFilesSync();
 console.log("getFilesSync array: "+JSON.stringify(files));
+```
+
+```javascript
+const clf = require('command_line_files');
 
 // Example 2: getFilesSync passes an array to callback function
 clf.getFilesSync( (files) => {
@@ -25,8 +29,12 @@ clf.getFilesSync( (files) => {
 		console.log("getFilesSync for each: "+file);
 	});
 });
+```
 
-// Example 3: processEachFile uses provided filesList, verifies files, and invokes the callback function for each file
+```javascript
+const clf = require('command_line_files');
+
+// Example 3: processEachFile uses provided filesList, and invokes the callback function for each file
 clf.processEachFile( (filename) => {
 	console.log("processFiles: "+filename);
 });
@@ -42,7 +50,7 @@ Examples of using module with logging:
 const lr = require('primitive_logger')
 var clf = require('./clf.js');
 
-// Example 1 : Enable "command_line_files" option in logger 
+// Example 4 : Enable "command_line_files" option in logger 
 //             to make it print some diagnostics
 clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
 	console.log("getFilesSync array 2: "+JSON.stringify(files));
@@ -51,15 +59,19 @@ clf.getFilesSync( {logger:{types:["command_line_files"]}}, (files) => {
 	});
 });
 
-// Example 2 : Create logger and pass it over to command_line_files module 
+```
+
+```javascript
+const clf = require('command_line_files');
+// Example 5 : Create logger and pass it over to command_line_files module 
 //             with "command_line_files" option enabled.
 var options = {
 	logger: {
+		types: ["command_line_files","info"],
 		format: { 
 			date: {show: true},
 			type: {show: true}
-		},
-		outputs: [{	file: "stdout",	types: ["command_line_files","info"]}]
+		}
 	},
 	filesList: ["*"]
 }
