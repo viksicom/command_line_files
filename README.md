@@ -19,7 +19,7 @@ console.log("getFilesSync array: "+JSON.stringify(files));
 ```
 
 ```javascript
-// Example 2: getFilesSync passes an array to callback function
+// Example 2: getFilesSync passes an array of filenames to callback function
 const clf = require('command_line_files');
 
 clf.getFilesSync( (files) => {
@@ -31,7 +31,8 @@ clf.getFilesSync( (files) => {
 ```
 
 ```javascript
-// Example 3: processEachFile uses provided filesList, and invokes the callback function for each file
+// Example 3: processEachFile builds an array of filenames, 
+//            and invokes the callback function for each file
 const clf = require('command_line_files');
 
 clf.processEachFile( (filename) => {
@@ -46,7 +47,7 @@ This module uses `"command_line_files"` message type, so to enable its logs, `"c
 Examples of using module with logging:
 
 ```javascript
-// Example 4 : Enable "command_line_files" option in logger 
+// Example 4 : Enabling "command_line_files" option in logger 
 //             to make it print some diagnostics, while calling code
 //             doesn't use logger
 const clf = require('command_line_files');
