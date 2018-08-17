@@ -1,6 +1,6 @@
 {
   "name": "command_line_files",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Utility to build an array of files from command line arguments",
   "main": "clf.js",
   "scripts": {

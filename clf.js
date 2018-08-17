@@ -1,4 +1,5 @@
 const fs=require('fs');
+const path = require('path');
 const glob=require('glob');
 const prlr = require('primitive_logger')
 
@@ -27,7 +28,11 @@ function processEachFile (options, callback) {
 	}
 	for (let j = 0; j < arguments.length; j++) {
 		var path = arguments[j];
-		files = glob.sync(path, {nonull: true});
+		if ( opts.scanDirs && isOnFileSystem(path) && isDirectory(path) ) {
+			files = findFilesInDir(opts, path);
+		} else {
+			files = glob.sync(path, {nonull: true});
+		}
 		if (files) {
 			//console.log("globbed list: "+JSON.stringify(files));
 			for (var i=0; i<files.length; i++) {
@@ -84,6 +89,42 @@ module.exports = {
     processEachFile: processEachFile
 };
 
+function findFilesInDir(opts, dir, filelist) {
+	filelist = filelist || [];
+	var files = fs.readdirSync(dir);
+	files.forEach(function(file) {
+		var candidate = path.join(dir, file);
+		if (isDirectory(candidate)) {
+			if (opts.dirs) {
+				filelist.push(candidate);
+			}
+			filelist = findFilesInDir(opts, candidate, filelist);
+		}
+		else if (opts.files) {
+			filelist.push(candidate);
+		}
+	});
+	return filelist;
+};
+
+function isDirectory(filename) {
+	return fs.statSync(filename).isDirectory();
+}
+
+function isFile(filename) {
+	return fs.isFile(filename).isDirectory();
+}
+
+function isOnFileSystem(filename) {
+	var exists = true;
+	try {
+		fs.statSync(filename);
+	} catch (statEx) {
+		exists = false;
+	}
+	return exists;
+}
+
 function con_out(opts, data) {
 	opts.logger.instance.log("command_line_files", data);
 }
@@ -94,7 +135,8 @@ function setopts (options) {
 		verbose: false,
 		validate: true,
 		files: true,
-		dirs: false
+		dirs: false,
+		scanDirs: true
 	};
 	if (!options)
 		options = {};
@@ -113,6 +155,9 @@ function setopts (options) {
 	} 
 	if (typeof options.dirs === "boolean") {
 		opts.dirs = options.dirs;
+	} 
+	if (typeof options.scanDirs === "boolean") {
+		opts.scanDirs = options.scanDirs;
 	} 
 	if (options.filesList && options.filesList.length > 0) {
 		opts.filesList = options.filesList;

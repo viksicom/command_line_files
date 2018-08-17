@@ -114,6 +114,7 @@ See Glob Primer https://www.npmjs.com/package/glob for command line pattern matc
    * `slice` - can be used to identify how many command line parameters to skip. Default: 2 ("node" and your_script_name.js)
    * `files` - when true, will include valid filenames, assuming `validate` is true. Default: true
    * `dirs` - if true, will include valid directories, assuming `validate` is true. Default: false
+   * `scanDirs` - when true and directory entered on command line, will recursively scan this directory for files and sub-directories, to include them into result set. Default: true
    * `filesList` - when provided, utility will use this list instead of looking for command line arguments. 
 
 ## Windows
